@@ -1,0 +1,19 @@
+postgresql:
+  version: 9.5
+  
+  users:
+    alice:
+      - login: True
+      - password: blah
+      - createdb: True
+    bob:
+      - password: woop
+      - createrole: True
+    joe:
+      - password: supersecret
+      - superuser: True
+
+  databases:
+    stuff:
+      owner: alice
+      template: template1
