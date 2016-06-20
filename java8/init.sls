@@ -12,4 +12,4 @@ oracle-java-license-autoaccept:
 oracle-java8-installer:
   pkg.installed:
     - require:
-      - pkgrepo: oracle-java-repo
+      - pkgrepo: oracle-java8-repo
