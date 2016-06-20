@@ -3,10 +3,10 @@ include:
 
 postgres-service-on-boot:
   service.running:
-    - name: postgresql-{{salt.pillar.get('postgresql:version', default_pg_version)}}
+    - name: postgresql
     - enable: True
     - require:
-      - pkg: postgresql-{{salt.pillar.get('postgresql:version', default_pg_version)}}
+      - pkg: postgresql-install
 
 {% if salt.pillar.get('postgresql', False) %}
 {% for name, user in salt.pillar.get('postgresql:users', {}).iteritems() %}
@@ -21,17 +21,17 @@ create-pg-user-{{ name }}:
     - encrypted: True
     - login: {{ user.get('login', False) }}
     - require:
-      - pkg: postgresql-{{salt.pillar.get('postgresql:version', default_pg_version)}}
+      - pkg: postgresql-install
 {% endfor %}
 
 {% for name, database in salt.pillar.get('postgresql:databases', {}).iteritems() %}
 create-pg-db-{{ name }}:
   postgres_database.present:
     - name: {{ name }}
-    - user: {{ database.get('owner', 'postgres') }}
+    - owner: {{ database.get('owner', 'postgres') }}
     - template: {{ database.get('template', 'template0') }}
     - require:
-      - pkg: postgresql-{{salt.pillar.get('postgresql:version', default_pg_version)}}
-      - postgres_user: {{ database.get('owner', 'postgres') }}
+      - pkg: postgresql-install
+      - postgres_user: create-pg-user-{{ database.get('owner', 'postgres') }}
 {% endfor %}
 {% endif %}

@@ -3,15 +3,15 @@ postgresql:
   
   users:
     alice:
-      - login: True
-      - password: blah
-      - createdb: True
+      login: True
+      password: blah
+      createdb: True
     bob:
-      - password: woop
-      - createrole: True
+      password: woop
+      createrole: True
     joe:
-      - password: supersecret
-      - superuser: True
+      password: supersecret
+      superuser: True
 
   databases:
     stuff:
